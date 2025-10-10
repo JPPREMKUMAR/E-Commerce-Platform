@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Navbar from "./components/Navbar"
 import MainPage from "./pages/MainPage"
 import Home from "./pages/Home"
+import PersonalCare from "./pages/PersonalCare"
 import Men from "./pages/Men"
 import Women from "./pages/Women"
 import Kids from "./pages/Kids"
@@ -37,6 +38,7 @@ function App() {
           <Route path="/men" element={<Men />} />
           <Route path="/women" element={<Women />} />
           <Route path="/kids" element={< Kids />} />
+          <Route path="/personal-care" element={< PersonalCare />} />
           <Route path="/genz-both" element={<GenZ />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/checkout/cart" element={<Cart />} />
