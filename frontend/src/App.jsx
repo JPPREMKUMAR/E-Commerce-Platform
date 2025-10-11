@@ -20,7 +20,8 @@ import SavedCards from "./pages/SavedCards"
 import SavedVpa from "./pages/SavedVpa"
 import Address from "./pages/Address"
 import ProductDetails from "./pages/ProductDetails"
-
+import Login from './pages/Login'
+import SignUp from "./pages/SignUp"
 
 
 
@@ -32,7 +33,8 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/" element={<MainPage />} />
           <Route path="/shop/home-living" element={<Home />} />
           <Route path="/shop/men" element={<Men />} />
