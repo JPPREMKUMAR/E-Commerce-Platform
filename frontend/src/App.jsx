@@ -34,10 +34,10 @@ function App() {
         <Routes>
 
           <Route path="/" element={<MainPage />} />
-          <Route path="/home-living" element={<Home />} />
-          <Route path="/men" element={<Men />} />
-          <Route path="/women" element={<Women />} />
-          <Route path="/kids" element={< Kids />} />
+          <Route path="/shop/home-living" element={<Home />} />
+          <Route path="/shop/men" element={<Men />} />
+          <Route path="/shop/women" element={<Women />} />
+          <Route path="/shop/kids" element={< Kids />} />
           <Route path="/personal-care" element={< PersonalCare />} />
           <Route path="/genz-both" element={<GenZ />} />
           <Route path="/wishlist" element={<Wishlist />} />

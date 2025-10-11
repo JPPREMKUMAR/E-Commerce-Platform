@@ -3,12 +3,12 @@ import logo from "./logo.png"
 import wishlistIcon from "./heart.png"
 import cartIcon from "./parcel.png"
 
-
+import searchIcon from "./search_icon.png"
 
 
 
 export {
 
     menuIcon,
-    logo, wishlistIcon, cartIcon
+    logo, wishlistIcon, cartIcon, searchIcon
 }
