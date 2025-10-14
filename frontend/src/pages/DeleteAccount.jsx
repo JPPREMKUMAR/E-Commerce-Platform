@@ -1,12 +1,12 @@
 
 import ProfileMenu from "../components/ProfileMenu"
 
-const SavedCards = () => {
+const DeleteAccount = () => {
     return (
         <div>
-            <ProfileMenu active={'SavedCards'}  >
+            <ProfileMenu active={'DeleteAccount'}  >
                 <div>
-                    SavedCards
+                    DeleteAccount
                 </div>
 
             </ProfileMenu>
@@ -15,4 +15,4 @@ const SavedCards = () => {
 }
 
 
-export default SavedCards
+export default DeleteAccount

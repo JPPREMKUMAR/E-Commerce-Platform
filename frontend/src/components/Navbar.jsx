@@ -1,15 +1,64 @@
 import { Link } from "react-router-dom"
 import { menuIcon, logo, wishlistIcon, cartIcon, searchIcon, profileIcon } from "../assets/assets"
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import CategoryList from "../components/CategoryList"
 import { MainContext } from "../context/MainContext"
+import Cookies from "js-cookie"
+import axios from "axios"
+
+
+
 const Navbar = () => {
 
 
 
     const [isActive, setIsActive] = useState(false)
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
 
-    const { menCategoriesList, womenCategoriesList, kidsCategoriesList, homeCategoriesList } = useContext(MainContext)
+    console.log(name, email)
+
+
+
+    const { menCategoriesList,
+        womenCategoriesList,
+        kidsCategoriesList,
+        homeCategoriesList,
+        token,
+        navigate, backendUrl, setToken
+    } = useContext(MainContext)
+
+
+    //console.log(token)
+
+
+
+    const onLogout = () => {
+        navigate("/login")
+        Cookies.remove("token")
+        setToken("")
+
+    }
+
+
+
+    const getProfileDetails = async () => {
+
+        //console.log(token)
+        const response = await axios.post(backendUrl + "/api/user/profileDetails", {}, { headers: { token: token } })
+        //console.log(response.data.profileDetails)
+        const userProfile = response.data.profileDetails
+        console.log(userProfile)
+        const userEmail = userProfile.email
+        const userName = userProfile.name
+        setEmail(userEmail)
+        setName(userName)
+
+    }
+    useEffect(() => {
+        getProfileDetails()
+    }, [name, email])
+
 
 
     return (
@@ -143,9 +192,25 @@ const Navbar = () => {
                                     </div>
                                     {/*Drop Down Menu */}
                                     <div className="px-5 py-3 hidden group-hover:block absolute top-full py-5 bg-white shadow-lg opacity-0 group-hover:opacity-100 transition-all rounded-md w-80">
-                                        <h1 className="text-black text-sm  font-bold my-2">Welcome</h1>
-                                        <p className="text-sm text-gray-400 my-1">To access account and manage orders</p>
-                                        <button className="cursor-pointer my-2 text-red-400 hover:text-white hover:bg-red-400 border border-gray-200 rounded-md px-4 py-2 text-sm font-bold">LOGIN / SIGNUP</button>
+                                        {
+                                            token !== undefined && token !== '' ?
+                                                <div>
+                                                    <h1 className="text-gray-700 text-sm font-semibold">Hello {name}</h1>
+                                                    <p className="text-sm text-gray-600">{email}</p>
+
+                                                </div>
+
+                                                : <div>
+                                                    <h1 className="text-black text-sm  font-bold my-2">Welcome</h1>
+                                                    <p className="text-sm text-gray-400 my-1">To access account and manage orders</p>
+                                                    <button className="cursor-pointer my-2 text-blue-500 hover:text-white hover:bg-blue-500 border border-gray-200 rounded-md px-4 py-2 text-sm font-bold">
+                                                        <Link to="/login">LOGIN / SIGNUP</Link>
+                                                    </button>
+                                                </div>
+
+                                        }
+
+
                                         <hr className="text-gray-200 my-2" />
                                         <div className="flex flex-col gap-y-2">
                                             <Link to="/my/orders" className="text-sm text-gray-700  hover:font-bold cursor-pointer hover:text-black">Orders</Link>
@@ -156,9 +221,16 @@ const Navbar = () => {
                                             <Link to="/my/saved-cards" className="text-sm text-gray-700   hover:font-bold  cursor-pointer hover:text-black">Saved Cards</Link>
                                             <Link to="/my/saved-vpa" className="text-sm text-gray-700   hover:font-bold  cursor-pointer hover:text-black">Saved VPA</Link>
                                             <Link to="/my/address" className="text-sm text-gray-700   hover:font-bold  cursor-pointer hover:text-black">Saved Addresses</Link>
-
                                         </div>
 
+                                        {
+                                            token !== undefined && token !== '' && <div className="flex flex-col gap-y-2">
+                                                <hr className="text-gray-200 my-2" />
+                                                <Link to="/my/profile/edit" className="text-sm text-gray-700  hover:font-bold cursor-pointer hover:text-black">Edit</Link>
+                                                <p onClick={onLogout} className="text-sm text-gray-700  hover:font-bold  cursor-pointer hover:text-black pl-0 ">Logout</p>
+                                            </div>
+
+                                        }
 
                                     </div>
 

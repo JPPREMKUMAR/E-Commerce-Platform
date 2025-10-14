@@ -9,13 +9,9 @@ const MainPage = () => {
 
     return (
         <div className="bg-gray-100 min-h-screen grid grid-cols-4">
-            {
-                menCategoriesList.map((item, index) => (
-
-                    <CategoryList itemsList={item} key={index} />
-
-                ))
-            }
+            <h1>
+                Main Page
+            </h1>
 
         </div>
     )

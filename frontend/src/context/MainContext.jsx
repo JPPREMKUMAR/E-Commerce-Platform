@@ -1,16 +1,18 @@
-import { createContext } from "react"
-
-
+import { createContext, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
 import { v4 as uuid } from "uuid"
+
+import Cookies from 'js-cookie'
+
 
 export const MainContext = createContext({})
 
 
-
 const MainContextProvider = (props) => {
 
-    const isWorking = "Is Working"
-    console.log(isWorking)
+    const navigate = useNavigate()
+
 
 
     // Men Categories 
@@ -316,9 +318,69 @@ const MainContextProvider = (props) => {
 
 
 
+    const backendUrl = import.meta.env.VITE_BACKEND_URL
+    console.log(backendUrl)
+
+
+
+
+    const isToken = Cookies.get("token")
+    const [token, setToken] = useState(isToken !== undefined ? isToken : '')
+
+
+
+
+
+
+
+
+    //Render The Component
+
+    useEffect(() => {
+
+        //console.log(token)
+        const getToken = Cookies.get("token")
+        setToken(getToken)
+
+    }, [])
+
+
+
+
+
+    //Profile Details 
+
+
+    const [profileDetails, setProfileDetails] = useState({})
+    const getProfileDetails = async () => {
+
+        //console.log(token)
+        const response = await axios.post(backendUrl + "/api/user/profileDetails", {}, { headers: { token: token } })
+        //console.log(response.data.profileDetails)
+        const userProfile = response.data.profileDetails
+        console.log(userProfile)
+        setProfileDetails(userProfile)
+    }
+
+
+    useEffect(() => {
+        getProfileDetails()
+    }, [])
+
+
+
+
+
+
+
+
+
 
     const value = {
-        isWorking, menCategoriesList, womenCategoriesList, kidsCategoriesList, homeCategoriesList
+        menCategoriesList, womenCategoriesList, kidsCategoriesList, homeCategoriesList,
+        backendUrl, token, setToken,
+        navigate, profileDetails, setProfileDetails
+
     }
     return (
 

@@ -5,9 +5,9 @@
 const CategoryList = (props) => {
 
     const { itemsList } = props
-    console.log(itemsList)
+    //console.log(itemsList)
     const { name, categoriesList, color } = itemsList
-    console.log(name)
+    //console.log(name)
     return (
         <div className="px-5 py-3 cursor-pointer">
             <h1 className={`text-sm ${color} font-semibold`}>{name} </h1>

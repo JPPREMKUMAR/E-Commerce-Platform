@@ -1,13 +1,15 @@
 
-
-
+import ProfileMenu from "../components/ProfileMenu"
 
 const SavedVpa = () => {
-
     return (
         <div>
+            <ProfileMenu active={'SavedVpa'}  >
+                <div>
+                    SavedVpa
+                </div>
 
-            SavedVpa
+            </ProfileMenu>
         </div>
     )
 }
