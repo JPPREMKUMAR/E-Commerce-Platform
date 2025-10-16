@@ -2,7 +2,7 @@
 
 
 import express from "express"
-import { signUpUser, logInUser, userProfile } from "../controllers/userController.js"
+import { signUpUser, logInUser, userProfile, updateUserProfile } from "../controllers/userController.js"
 import authUser from "../middleware/authUser.js"
 
 
@@ -20,6 +20,10 @@ userRouter.post("/login", logInUser)
 // User Profile 
 
 userRouter.post("/profileDetails", authUser, userProfile)
+
+// User Profile Edit 
+
+userRouter.post("/profileEdit", authUser, updateUserProfile)
 
 
 export default userRouter

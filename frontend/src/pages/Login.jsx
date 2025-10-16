@@ -18,6 +18,8 @@ const Login = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState('')
+
 
 
 
@@ -45,9 +47,12 @@ const Login = () => {
             Cookies.set("token", token, { expires: 30 })
             setToken(token)
             navigate("/")
+            setError('')
 
         } else {
             setIsLoading(false)
+            setError(response.data.message)
+
 
         }
 
@@ -109,6 +114,10 @@ const Login = () => {
                     </div>
                 </div>
 
+                {
+
+                    error.length !== "" && <p className="text-red-500 text-md font-bold">{error}</p>
+                }
 
             </form>
 

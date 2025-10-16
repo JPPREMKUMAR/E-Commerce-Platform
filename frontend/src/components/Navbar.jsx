@@ -45,19 +45,22 @@ const Navbar = () => {
     const getProfileDetails = async () => {
 
         //console.log(token)
-        const response = await axios.post(backendUrl + "/api/user/profileDetails", {}, { headers: { token: token } })
-        //console.log(response.data.profileDetails)
-        const userProfile = response.data.profileDetails
-        console.log(userProfile)
-        const userEmail = userProfile.email
-        const userName = userProfile.name
-        setEmail(userEmail)
-        setName(userName)
+        if (token !== '' && token !== undefined) {
+
+            const response = await axios.post(backendUrl + "/api/user/profileDetails", {}, { headers: { token: token } })
+            //console.log(response.data.profileDetails)
+            const userProfile = response.data.profileDetails
+            console.log(userProfile)
+            const userEmail = userProfile.email
+            const userName = userProfile.name
+            setEmail(userEmail)
+            setName(userName)
+        }
 
     }
     useEffect(() => {
         getProfileDetails()
-    }, [name, email])
+    }, [name, email, token])
 
 
 
@@ -194,7 +197,7 @@ const Navbar = () => {
                                     <div className="px-5 py-3 hidden group-hover:block absolute top-full py-5 bg-white shadow-lg opacity-0 group-hover:opacity-100 transition-all rounded-md w-80">
                                         {
                                             token !== undefined && token !== '' ?
-                                                <div>
+                                                <div onClick={() => navigate("/my/profile")} className="cursor-pointer">
                                                     <h1 className="text-gray-700 text-sm font-semibold">Hello {name}</h1>
                                                     <p className="text-sm text-gray-600">{email}</p>
 

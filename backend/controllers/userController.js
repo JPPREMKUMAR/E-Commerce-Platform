@@ -25,6 +25,7 @@ export const signUpUser = async (req, res) => {
         const isUser = await User.findOne({ email: email })
         // console.log(isUser)
         if (isUser === null) {
+            console.log(password.length)
             if (password.length >= 8) {
                 const hashedPassword = await bcrypt.hash(password, 10)
                 const newUser = new User({
@@ -43,7 +44,7 @@ export const signUpUser = async (req, res) => {
                 return res.json({ success: true, message: "User Created.", token: token })
 
             } else {
-                return res.json({ message: false, message: "Your password must be 8 or more characters." })
+                return res.json({ success: false, message: "Your password must be 8 or more characters." })
 
             }
 
@@ -77,13 +78,13 @@ export const logInUser = async (req, res) => {
 
     try {
         const { email, password } = req.body
-        console.log(`email is ${email}`)
-        console.log(`password is ${password}`)
+        //console.log(`email is ${email}`)
+        //console.log(`password is ${password}`)
 
         const isUser = await User.findOne({ email })
         if (isUser === null) {
 
-            return res.json({ success: false, message: 'This User is not Registered.' })
+            return res.json({ success: false, message: 'Please use valid email.' })
         } else {
 
             const comparedPassword = isUser.password
@@ -102,7 +103,7 @@ export const logInUser = async (req, res) => {
 
             } else {
 
-                return res.json({ success: false, message: "Please enter valid password." })
+                return res.json({ success: false, message: "Please use valid password." })
             }
 
 
@@ -136,5 +137,30 @@ export const userProfile = async (req, res) => {
         return res.json({ success: false, error })
     }
 
+
+}
+
+
+export const updateUserProfile = async (req, res) => {
+
+    try {
+        const { userDetails } = req
+        const { id } = userDetails
+        const { email, number, alternateNumber, dateOfBirth, location, gender } = req.body
+
+        console.log(number, alternateNumber, dateOfBirth, location, gender)
+        await User.updateOne({ _id: id }, { number, alternateNumber, dateOfBirth, location, gender })
+
+        const userProfile = await User.findOne({ _id: id })
+
+
+        res.json({ success: true, message: "Profile Details Updated.", userProfile })
+
+
+    } catch (error) {
+
+        console.log(error)
+        return res.json({ success: false, error })
+    }
 
 }

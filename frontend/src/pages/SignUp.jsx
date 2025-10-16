@@ -16,9 +16,9 @@ const SignUp = () => {
     const [isHide, setIsHide] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [name, setName] = useState('')
-
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState('')
 
 
     const navigate = useNavigate()
@@ -31,9 +31,10 @@ const SignUp = () => {
 
         if (name !== '' && email !== '' && password.length >= 8) {
 
-            console.log(name, email, password)
-
+            console.log(name, email, password.length)
+            console.log(password.length)
             const userData = { name, email, password }
+
 
             const response = await axios.post(backendUrl + "/api/user/signup", userData)
 
@@ -43,19 +44,21 @@ const SignUp = () => {
                 setToken(token)
                 navigate("/")
                 Cookies.set("token", token, { expires: 30 })
-
-
                 setIsLoading(false)
+                setError('')
 
 
             } else {
                 setIsLoading(false)
+                setError(response.data.message)
 
             }
 
 
         } else {
             console.log("new", name, email, password)
+            setIsLoading(false)
+            return setError("Password should contains 8 or more characters.")
         }
     }
 
@@ -127,7 +130,9 @@ const SignUp = () => {
                     </div>
                 </div>
 
-
+                {
+                    error.length !== '' && <p className="text-red-500 text-ms font-bold">{error}</p>
+                }
 
             </form>
 

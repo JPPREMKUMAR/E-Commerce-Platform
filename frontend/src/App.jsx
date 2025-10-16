@@ -23,7 +23,7 @@ import ProductDetails from "./pages/ProductDetails"
 import Login from './pages/Login'
 import SignUp from "./pages/SignUp"
 import DeleteAccount from "./pages/DeleteAccount"
-
+import EditProfile from "./pages/EditProfile"
 
 function App() {
 
@@ -48,6 +48,7 @@ function App() {
         <Route path="/my/dashboard" element={<Dashboard />} />
         <Route path="/my/coupons" element={< Coupons />} />
         <Route path="/my/profile" element={<Profile />} />
+        <Route path="/my/profile/edit" element={<EditProfile />} />
         <Route path="/my/saved-cards" element={<SavedCards />} />
         <Route path="/my/saved-vpa" element={<SavedVpa />} />
         <Route path="/my/address" element={<Address />} />

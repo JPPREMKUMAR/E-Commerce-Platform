@@ -379,7 +379,7 @@ const MainContextProvider = (props) => {
     const value = {
         menCategoriesList, womenCategoriesList, kidsCategoriesList, homeCategoriesList,
         backendUrl, token, setToken,
-        navigate, profileDetails, setProfileDetails
+        navigate, profileDetails, setProfileDetails,
 
     }
     return (
