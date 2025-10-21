@@ -19,7 +19,7 @@ const ProfileMenu = (props) => {
         <div>
 
 
-            <div className="my-10 mx-30 ">
+            <div className="my-10 mx-30 hidden sm:block ">
 
                 {/* Account Details  */}
 
@@ -94,6 +94,10 @@ const ProfileMenu = (props) => {
 
                 </div>
 
+            </div>
+
+            <div className="sm:hidden ">
+                {props.children}
             </div>
 
         </div>

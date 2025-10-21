@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { menuIcon, logo, wishlistIcon, cartIcon, searchIcon, profileIcon } from "../assets/assets"
+import { menuIcon, logo, wishlistIcon, cartIcon, searchIcon, profileIcon, menu, close } from "../assets/assets"
 import { useState, useContext, useEffect } from "react"
 import CategoryList from "../components/CategoryList"
 import { MainContext } from "../context/MainContext"
@@ -15,6 +15,10 @@ const Navbar = () => {
     const [isActive, setIsActive] = useState(false)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
+
+    const [isMenu, setIsMenu] = useState(false)
+    console.log(isMenu)
+
 
     console.log(name, email)
 
@@ -69,26 +73,84 @@ const Navbar = () => {
         <div className="position:fixed">
 
             <div>
-                <div className="flex justify-between items-center gap-x-2 sm:hidden">
-                    <div className="flex items-center gap-x-4">
+                <div className=" sm:hidden flex justify-between items-center gap-x-2 sm:hidden">
+                    <div className="flex items-center gap-x-4 py-4 px-10">
 
-                        <div className="">
-                            <img src={menuIcon} alt="Menu" className="w-7 h-10" />
+                        <div className="" onClick={() => setIsMenu(!isMenu)}>
+                            <img src={isMenu ? close : menu} alt="Menu" className="w-9 h-9" />
                         </div>
                         <div>
-                            <img src={logo} alt="Logo" className="w-14 h-14" />
+                            <img src={logo} alt="Logo" className="w-20 h-20" />
                         </div>
                     </div>
-                    <div className="flex items-center gap-x-4">
-                        <div>
-                            <img src={wishlistIcon} alt="Wishlist" className="w-6 h-6" />
-                        </div>
-                        <div>
-                            <img src={cartIcon} alt="Bag" className="w-6 h-6" />
-                        </div>
+                    <div className="flex items-center gap-x-6 px-10">
+                        <Link to="/wishlist" onClick={() => setIsMenu(false)}>
+                            <img src={wishlistIcon} alt="Wishlist" className="w-9 h-9" />
+                        </Link>
+                        <Link to="/checkout/cart" onClick={() => setIsMenu(false)}>
+                            <img src={cartIcon} alt="Bag" className="w-9 h-9" />
+                        </Link>
                     </div>
                 </div>
+                {
+
+                    isMenu && <div>
+                        <div className="px-5 py-10  ">
+                            {
+                                token !== undefined && token !== '' ?
+                                    <div onClick={() => navigate("/my/profile")} className="cursor-pointer">
+                                        <h1 className="text-gray-700 text-2xl font-semibold" onClick={() => setIsMenu(false)}>Hello {name}</h1>
+                                        <p className="text-2xl text-gray-600">{email}</p>
+
+                                    </div>
+
+                                    : <div>
+                                        <h1 className="text-black text-xl  font-bold my-2">Welcome</h1>
+                                        <p className="text-xl text-gray-400 my-1">To access account and manage orders</p>
+                                        <button className="cursor-pointer my-2 text-blue-500 hover:text-white hover:bg-blue-500 border border-gray-200 rounded-md px-4 py-2 text-sm font-bold">
+                                            <Link to="/login" onClick={() => setIsMenu(false)}>LOGIN / SIGNUP</Link>
+                                        </button>
+                                    </div>
+
+                            }
+
+
+                            <hr className="text-gray-200 my-2" />
+                            <div className="flex flex-col gap-y-2">
+                                <Link onClick={() => setIsMenu(false)} to="/my/orders" className="text-2xl text-gray-700  hover:font-bold cursor-pointer hover:text-black">Orders</Link>
+                                <Link onClick={() => setIsMenu(false)} to="/wishlist" className="text-2xl text-gray-700  hover:font-bold  cursor-pointer hover:text-black">Wishlist</Link>
+                                <Link onClick={() => setIsMenu(false)} to="/wishlist" className="text-2xl text-gray-700  hover:font-bold  cursor-pointer hover:text-black">Bag</Link>
+                                <Link onClick={() => setIsMenu(false)} to="/my/orders" className="text-2xl text-gray-700  hover:font-bold  cursor-pointer hover:text-black">Contact Us</Link>
+                                <Link onClick={() => setIsMenu(false)} to="/my/coupons" className="text-2xl text-gray-700   hover:font-bold cursor-pointer hover:text-black">Coupons</Link>
+                                <Link onClick={() => setIsMenu(false)} to="/my/saved-cards" className="text-2xl text-gray-700   hover:font-bold  cursor-pointer hover:text-black">Saved Cards</Link>
+                                <Link onClick={() => setIsMenu(false)} to="/my/saved-vpa" className="text-2xl text-gray-700   hover:font-bold  cursor-pointer hover:text-black">Saved VPA</Link>
+                                <Link onClick={() => setIsMenu(false)} to="/my/address" className="text-2xl text-gray-700   hover:font-bold  cursor-pointer hover:text-black">Saved Addresses</Link>
+                            </div>
+
+                            {
+                                token !== undefined && token !== '' && <div className="flex flex-col gap-y-2">
+                                    <hr className="text-gray-200 my-2" />
+                                    <Link onClick={() => setIsMenu(false)} to="/my/profile/edit" className="text-2xl text-gray-700  hover:font-bold cursor-pointer hover:text-black">Edit</Link>
+                                    <button onClick={onLogout}>
+                                        <p onClick={() => setIsMenu(false)} className="text-2xl text-gray-700  hover:font-bold  cursor-pointer hover:text-black pl-0 ">Logout</p>
+                                    </button>
+                                </div>
+
+                            }
+
+                        </div>
+                    </div>
+                }
+
             </div>
+
+
+
+
+
+
+
+
 
             {/* MD & LG Devices */}
             <div className="hidden sm:block border border-b border-gray-200 m-0 w-full px-10">
@@ -265,7 +327,7 @@ const Navbar = () => {
             </div>
 
 
-        </div>
+        </div >
     )
 }
 

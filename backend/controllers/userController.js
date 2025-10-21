@@ -146,7 +146,7 @@ export const updateUserProfile = async (req, res) => {
     try {
         const { userDetails } = req
         const { id } = userDetails
-        const { email, number, alternateNumber, dateOfBirth, location, gender } = req.body
+        const { number, alternateNumber, dateOfBirth, location, gender } = req.body
 
         console.log(number, alternateNumber, dateOfBirth, location, gender)
         await User.updateOne({ _id: id }, { number, alternateNumber, dateOfBirth, location, gender })

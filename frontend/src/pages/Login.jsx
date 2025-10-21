@@ -62,34 +62,34 @@ const Login = () => {
     return (
         <div className="bg-gray-100 min-h-screen  flex justify-center p-10">
 
-            <form onSubmit={onSubmitForm} className="px-5 py-2 rounded-md shadow-md bg-white p-10 h-[450px]">
+            <form onSubmit={onSubmitForm} className="w-full sm:w-[600px] px-10 py-5 rounded-md shadow-md bg-white p-10 h-[650px]">
                 <div className="mt-3 w-[400px]">
-                    <h1 className="text-gray-700 text-[20px] font-bold">Login </h1>
+                    <h1 className="text-gray-700 text-[40px] sm:text-[60px] font-bold">Login </h1>
                 </div>
-                <div className="flex flex-col gap-y-2 my-5">
-                    <label className="text-gray-800 text-sm font-bold" htmlFor="email">Email Address</label>
-                    <div className="border border-gray-200 px-4 py-2">
-                        <input className="w-full py-1 outline-none" id="email" type="email" placeholder="Enter Your Email" required value={email} onChange={(event) => setEmail(event.target.value)} />
+                <div className="flex flex-col gap-y-4 my-5">
+                    <label className="text-gray-800 text-sm font-bold text-[20px]" htmlFor="email">Email Address</label>
+                    <div className="border border-gray-200 px-4 py-2 ">
+                        <input className="w-full px-2 py-3 outline-none text-xl" id="email" type="email" placeholder="Enter Your Email" required value={email} onChange={(event) => setEmail(event.target.value)} />
                     </div>
 
                 </div>
-                <div className="flex flex-col gap-y-2 my-5">
+                <div className="flex flex-col gap-y-4 my-5">
                     <div className="flex justify-between items-center">
-                        <label className="text-gray-800 text-sm font-bold" htmlFor="password">Password</label>
+                        <label className="text-gray-800 text-[20px] font-bold" htmlFor="password">Password</label>
                         {
                             isHide ? <div className="flex items-center gap-x-2 cursor-pointer" onClick={() => (setIsHide(!isHide))}>
-                                <img alt="show" src={viewIcon} className="w-4 h-4" />
-                                <p className="text-xs ">Show</p>
+                                <img alt="show" src={viewIcon} className="w-7 h-7" />
+                                <p className="text-[20px] ">Show</p>
                             </div> : <div className="flex items-center gap-x-2 cursor-pointer" onClick={() => (setIsHide(!isHide))}>
-                                <img alt="hide" src={hideIcon} className="w-4 h-4" />
-                                <p className="text-xs ">Hide</p>
+                                <img alt="hide" src={hideIcon} className="w-7 h-7" />
+                                <p className="text-[20px] ">Hide</p>
                             </div>
 
                         }
                     </div>
 
                     <div className="border border-gray-200 px-4 py-2">
-                        <input className="w-full py-1 outline-none" id="Password" type={isHide ? 'text' : 'password'} placeholder="Enter Your Password" required value={password} onChange={(event) => setPassword(event.target.value)} />
+                        <input className="w-full py-3 px-2 text-xl outline-none" id="Password" type={isHide ? 'text' : 'password'} placeholder="Enter Your Password" required value={password} onChange={(event) => setPassword(event.target.value)} />
                     </div>
 
 
@@ -99,24 +99,24 @@ const Login = () => {
                 <div className="mb-10 my-8">
 
                     <div className="flex items-center gap-x-4">
-                        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white  rounded-md shadow-md outline-none px-10 py-3">Login</button>
+                        <button type="submit" className="w-[180px] bg-blue-500 hover:bg-blue-600 text-white  rounded-md shadow-md outline-none px-10 py-5 text-xl font-semibold">Login</button>
 
                         {
-                            isLoading && <div>
+                            isLoading && <div className="">
 
-                                <TailSpin color="red" width={30} height={30} />
+                                <TailSpin color="red" width={60} height={60} />
                             </div>
 
                         }
                     </div>
-                    <div className="my-3">
-                        <p className="text-gray-700 text-sm">Don't have an account? <Link to="/signup" className="border-b ml-1 cursor-pointer hover:text-blue-600">SignUp</Link></p>
+                    <div className="my-6">
+                        <p className="text-gray-700 text-2xl">Don't have an account? <Link to="/signup" className="border-b ml-1 cursor-pointer hover:text-blue-600">SignUp</Link></p>
                     </div>
                 </div>
 
                 {
 
-                    error.length !== "" && <p className="text-red-500 text-md font-bold">{error}</p>
+                    error.length !== "" && <p className="text-red-500 text-2xl font-bold">{error}</p>
                 }
 
             </form>

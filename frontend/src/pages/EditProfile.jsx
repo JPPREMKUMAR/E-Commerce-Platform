@@ -1,24 +1,75 @@
 
-import { useContext } from "react"
+import { useContext, useState, useEffect } from "react"
 import ProfileMenu from "../components/ProfileMenu"
 import { MainContext } from "../context/MainContext"
+
+import axios from "axios"
+
 
 const EditProfile = () => {
 
 
-    const { profileDetails } = useContext(MainContext)
+    const { profileDetails, navigate, token, backendUrl } = useContext(MainContext)
     const { number, email, name, gender, location, alternateNumber, dateOfBirth } = profileDetails
     ///api/user/profileEdit 
 
+    const [updateName, setUpdatedName] = useState('')
+    const [updatedNumber, setUpdatedNumber] = useState('')
+    const [updateGender, setUpdatedGender] = useState('M')
+    const [updatedLocation, setUpdatedLocation] = useState('')
+    const [updatedAlternateNumber, setUpdatedAlternateNumber] = useState('')
+    const [upadatedDateOfBirth, setUpdatedDateOfBirth] = useState('')
+
+    const [error, setError] = useState('')
+
+    useEffect(() => {
+        setUpdatedName(name !== undefined ? name : '')
+        setUpdatedNumber(number !== undefined ? number : '')
+        setUpdatedLocation(location !== undefined ? location : '')
+        setUpdatedAlternateNumber(alternateNumber !== undefined ? alternateNumber : '')
+        setUpdatedGender(gender !== undefined ? gender : "Male")
+        setUpdatedDateOfBirth(dateOfBirth !== undefined ? dateOfBirth : '')
 
 
 
+    }, [name, number, location, alternateNumber, dateOfBirth])
 
-    const onSubmitForm = (event) => {
-
+    const onSubmitForm = async (event) => {
         event.preventDefault()
+        if (updatedNumber !== '' && updateName !== '' && updateGender !== '' && updatedLocation !== '' && updatedAlternateNumber !== '' && upadatedDateOfBirth !== '') {
+
+            console.log(backendUrl)
+
+            const response = await axios.post(backendUrl + "/api/user/profileEdit", {
+
+                name: updateName, number: updatedNumber, location: updatedLocation, alternateNumber: updatedAlternateNumber, dateOfBirth: upadatedDateOfBirth, gender: updateGender
+            }, { headers: { token } })
+            console.log(response)
+            console.log(response.data)
+
+            setError('')
+            navigate("/my/profile")
+
+
+
+
+
+        } else {
+            setError("Plese Fill All Details")
+        }
     }
 
+
+    const onChangeGender = () => {
+        console.log("button Clicked")
+        if (updateGender === "Male") {
+            setUpdatedGender("Female")
+        } else {
+            setUpdatedGender("Male")
+        }
+
+
+    }
 
 
     return (
@@ -39,37 +90,37 @@ const EditProfile = () => {
                         <div className="flex flex-col gap-y-2">
                             <h1 className="px-3 my-1 text-xl ">Your Full Name</h1>
                             <div className="border border-gray-300 py-5 px-5 ">
-                                <input value={name} placeholder="Enter Your Full Name" className="text-xl text-gray-600 w-full outline-none" />
+                                <h1 className="text-xl text-gray-600">{name}</h1>
                             </div>
                         </div>
 
                         <div className="flex flex-col gap-y-2">
                             <h1 className="px-3 my-1 text-xl ">Your Number</h1>
                             <div className="border border-gray-300 py-5 px-5 ">
-                                <input value={number} placeholder="Enter Your Number" className="text-xl text-gray-600 w-full outline-none" />
+                                <input value={updatedNumber} onChange={(event) => setUpdatedNumber(event.target.value)} placeholder="Enter Your Number" className="text-xl text-gray-600 w-full outline-none" />
                             </div>
                         </div>
                         <div className="flex flex-col gap-y-2">
                             <h1 className="px-3 my-1 text-xl ">Alternate Number</h1>
                             <div className="border border-gray-300 py-5 px-5 ">
-                                <input value={alternateNumber} placeholder="Enter Your Alternate Number" className="text-xl text-gray-600 w-full outline-none" />
+                                <input value={updatedAlternateNumber} onChange={(event) => setUpdatedAlternateNumber(event.target.value)} placeholder="Enter Your Alternate Number" className="text-xl text-gray-600 w-full outline-none" />
                             </div>
                         </div>
                         <div className="flex flex-col gap-y-2">
                             <h1 className="px-3 my-1 text-xl ">Your Location</h1>
                             <div className="border border-gray-300 py-5 px-5 ">
-                                <input value={location} placeholder="Enter Your City" className="text-xl text-gray-600 w-full outline-none" />
+                                <input value={updatedLocation} onChange={(event) => setUpdatedLocation(event.target.value)} placeholder="Enter Your City" className="text-xl text-gray-600 w-full outline-none" />
                             </div>
                         </div>
                         <div className="flex flex-col gap-y-2">
                             <h1 className="px-3 my-1 text-xl ">Gender</h1>
                             <div className="flex gap-x-10">
-                                <div className="w-40 border flex justify-center items-center py-4 px-2 bg-gray-200 ">
+                                <button type="button" className={`w-40 border flex justify-center items-center py-4 px-2 ${updateGender === "Male" && 'bg-gray-200'} `} onClick={onChangeGender}>
                                     <p className="text-black text-xl font-bold text-blue-500 cursor-pointer">Male</p>
-                                </div>
-                                <div className="w-40 border flex justify-center items-center py-4 px-2">
+                                </button>
+                                <button type="button" className={`w-40 border flex justify-center items-center py-4 px-2 ${updateGender === "Female" && 'bg-gray-200'} `} onClick={onChangeGender}>
                                     <p className="text-black text-xl font-bold text-blue-500 cursor-pointer">Female</p>
-                                </div>
+                                </button>
 
                             </div>
                         </div>
@@ -77,7 +128,7 @@ const EditProfile = () => {
                         <div className="flex flex-col gap-y-2">
                             <h1 className="px-3 my-1 text-xl ">Your Date Of Birth</h1>
                             <div className="border border-gray-300 py-5 px-5 ">
-                                <input value={dateOfBirth} placeholder="Enter Your Date Of Birth DD/MM/YYYY" className="text-xl text-gray-600 w-full outline-none" />
+                                <input value={upadatedDateOfBirth} onChange={(event) => setUpdatedDateOfBirth(event.target.value)} placeholder="Enter Your Date Of Birth DD/MM/YYYY" className="text-xl text-gray-600 w-full outline-none" />
                             </div>
                         </div>
 

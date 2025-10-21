@@ -13,10 +13,14 @@ import orderDetails from "./orderDetails.png"
 import couponsDetails from "./couponsDetails.png"
 import cardDetails from "./cartDetails.png"
 import addressDetails from "./addressDetails.png"
+import close from "./close.png"
+import menu from "./menu.png"
+
+
 
 export {
 
-    menuIcon,
+    menuIcon, menu, close,
     logo, wishlistIcon, cartIcon, searchIcon, profileIcon, viewIcon, hideIcon, userProfile,
     profileDetailsImg, wishlistDetails, orderDetails, couponsDetails, cardDetails, addressDetails
 }
